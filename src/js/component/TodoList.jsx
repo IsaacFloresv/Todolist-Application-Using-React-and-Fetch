@@ -1,5 +1,10 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+// Components import ------------------------------------------------------------
 import Task from "./Task.jsx";
+import Title from "./Title.jsx";
+import AddTaskInput from "./AddTaskInput.jsx";
+import NoTaskMessage from "./NoTaskMessage.jsx";
+import TaskCounter from "./TaskCounter.jsx";
 
 //create your first component
 const TodoList = () => {
@@ -7,25 +12,27 @@ const TodoList = () => {
 	// Tasks State
 	const [tasks, setTasks] = useState([])
 	const [inputValue, setInputValue] = useState('')
+
+	// Handle Show or unShow delete task button and button position.
 	const [deleteItemShowing, setDeleteItemShowing] = useState({
 		isShowing: false,
 		index: null
 	})
 
-
-	// Handle Input Value
+	// Set input value into state
 	const handleInputChange = data => {
 		setInputValue(data.target.value)
 	}
 
+	// Add new task with input value when user press Enter key
 	const handleAddTask = data => {
-		if (data.key === 'Enter') {
+		if (data.key === 'Enter' && data.target.value !== '') {
 			setTasks([...tasks, inputValue])
 			setInputValue('')
 		}
 	}
 
-
+	// Remove selected Task by Index returning any others that no-match in array
 	const handleDeleteTask = index => {
 		setTasks(tasks.filter((e, i) => {
 			return index !== i
@@ -34,67 +41,50 @@ const TodoList = () => {
 
 
 	return (
-		<div className="vh-100 overflow-auto d-flex flex-column align-items-center bg-grey ">
+		<div className="vh-100 d-flex flex-column align-items-center bg-grey">
 
-			{/* Title */}
-			<div className="pt-5 pb-3">
-				<h1 className="fw-light text-muted">todos</h1>
-			</div>
+			<Title title={"TODO's"} />
 
-			<div className="bg-white row col-10 col-sm-8 col-md-6 col-lg-6 todo-container">
-				{/* Add to task input */}
-				<div className="p-0">
-					<input value={inputValue}
-						className="input-task w-100 px-5 py-3 my-1"
-						placeholder="Add new task..."
-						onChange={(data) => handleInputChange(data)}
-						onKeyDown={(data) => handleAddTask(data)}
-						type="text" />
-					<hr />
-				</div>
+			<div className="bg-white row col-10 col-sm-8 col-md-8 col-lg-8 col-xl-6 todo-container">
+
+				<AddTaskInput
+					inputValue={inputValue}
+					handleInputChange={handleInputChange}
+					handleAddTask={handleAddTask}
+				/>
 
 				{
 					tasks.length > 0
-						?
-						tasks.map((task, index) => {
-							return (
-								<div
-									key={index}
-									onMouseOver={() => setDeleteItemShowing({ isShowing: true, index: index })}
-									onMouseLeave={() => setDeleteItemShowing({ isShowing: false, index: null })}
-								>
-									<Task
-										deleteItemShowing={deleteItemShowing}
-										task={task}
-										index={index}
-										handleDeleteTask={handleDeleteTask}
-									/>
-								</div>
-							)
-						})
-						:
+						? // if the user have tasks
 						<>
-							<h4
-								className="p-5 text-center text-muted fw-light"
-							>
-								{`No tasks, add a task`}
-							</h4>
-							<hr />
+							<div className="task-list p-0">
+								{
+									tasks.map((task, index) => {
+										return (
+											<Task
+												key={index}
+												task={task}
+												index={index}
+												deleteItemShowing={deleteItemShowing}
+												setDeleteItemShowing={setDeleteItemShowing}
+												handleDeleteTask={handleDeleteTask}
+											/>
+										)
+									})
+								}
+							</div>
 						</>
+						: // if user dont have any task
+						<NoTaskMessage
+							message={'No tasks, add a task'}
+						/>
 				}
 
-				<span className="text-muted py-2 fw-light"><small>
-					{
-						tasks.length > 0
-							? `${tasks.length} item left`
-							: `No have tasks pending`
-					}
-				</small></span>
+				<TaskCounter
+					tasks={tasks}
+				/>
 
 			</div>
-			<br />
-			<br />
-			<br />
 		</div>
 	);
 };

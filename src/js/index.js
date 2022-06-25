@@ -9,4 +9,4 @@ import "../styles/index.css";
 import TodoList from "./component/TodoList.jsx";
 
 //render your react application
-ReactDOM.render(<TodoList />, document.querySelector("#app"));
+ReactDOM.render(<React.StrictMode><TodoList /></React.StrictMode>, document.querySelector("#app"));
