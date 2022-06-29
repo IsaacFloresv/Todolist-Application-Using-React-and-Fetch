@@ -4,6 +4,7 @@ const AddTaskInput = ({ inputValue, handleInputChange, handleAddTask }) => {
   return (
     <div className="p-0">
       <input
+        autoFocus
         value={inputValue}
         className="input-task w-100 px-5 py-3 my-1"
         placeholder="Add new task..."

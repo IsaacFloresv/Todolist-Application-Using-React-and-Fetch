@@ -1,10 +1,14 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 // Components import ------------------------------------------------------------
 import Task from "./Task.jsx";
 import Title from "./Title.jsx";
 import AddTaskInput from "./AddTaskInput.jsx";
 import NoTaskMessage from "./NoTaskMessage.jsx";
 import TaskCounter from "./TaskCounter.jsx";
+
+//Helpers
+import { getTasks, updateTasks } from "../helpers/getTasks.js";
+
 
 //create your first component
 const TodoList = () => {
@@ -15,9 +19,26 @@ const TodoList = () => {
 
 	// Handle Show or unShow delete task button and button position.
 	const [deleteItemShowing, setDeleteItemShowing] = useState({
-		isShowing: false,
 		index: null
 	})
+
+	//Initial load data
+	useEffect(() => {
+		getTasks(process.env.API_URL)
+			.then(res => {
+				if (res[0].label !== 'InvalidNameValue') {
+					setTasks(res)
+				} else {
+					setTasks([])
+				}
+			})
+	}, [])
+
+	// save new task in backend
+	useEffect(() => {
+		const sample = [{ label: 'InvalidNameValue', done: false }]
+		updateTasks(process.env.API_URL, tasks.length === 0 ? sample : tasks)
+	}, [tasks])
 
 	// Set input value into state
 	const handleInputChange = data => {
@@ -27,7 +48,10 @@ const TodoList = () => {
 	// Add new task with input value when user press Enter key
 	const handleAddTask = data => {
 		if (data.key === 'Enter' && data.target.value !== '') {
-			setTasks([...tasks, inputValue])
+			setTasks([...tasks, {
+				label: data.target.value,
+				done: false
+			}])
 			setInputValue('')
 		}
 	}
@@ -38,7 +62,6 @@ const TodoList = () => {
 			return index !== i
 		}))
 	}
-
 
 	return (
 		<div className="vh-100 d-flex flex-column align-items-center bg-grey">
@@ -56,24 +79,22 @@ const TodoList = () => {
 				{
 					tasks.length > 0
 						? // if the user have tasks
-						<>
-							<div className="task-list p-0">
-								{
-									tasks.map((task, index) => {
-										return (
-											<Task
-												key={index}
-												task={task}
-												index={index}
-												deleteItemShowing={deleteItemShowing}
-												setDeleteItemShowing={setDeleteItemShowing}
-												handleDeleteTask={handleDeleteTask}
-											/>
-										)
-									})
-								}
-							</div>
-						</>
+						<div className="task-list p-0">
+							{
+								tasks.map((task, index) => {
+									return (
+										<Task
+											key={index}
+											task={task}
+											index={index}
+											deleteItemShowing={deleteItemShowing}
+											setDeleteItemShowing={setDeleteItemShowing}
+											handleDeleteTask={handleDeleteTask}
+										/>
+									)
+								})
+							}
+						</div>
 						: // if user dont have any task
 						<NoTaskMessage
 							message={'No tasks, add a task'}
@@ -88,5 +109,6 @@ const TodoList = () => {
 		</div>
 	);
 };
+
 
 export default TodoList;

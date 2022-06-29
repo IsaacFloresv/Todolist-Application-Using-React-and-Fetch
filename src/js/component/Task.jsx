@@ -10,11 +10,11 @@ const Task = ({ task, index, setDeleteItemShowing, deleteItemShowing, handleDele
     >
       <div className="m-0 p-0 d-flex align-items-center justify-content-between">
         <h5 className={` text-muted fw-normal px-5 py-3 m-0`}>
-          {task}
+          {task.label}
         </h5>
         <span
           className={`btn-delete text-danger fw-normal px-5 py-3 m-0 text-end
-          ${deleteItemShowing.isShowing && deleteItemShowing.index === index ? '' : 'd-none'}`}
+          ${deleteItemShowing.index === index ? '' : 'd-none'}`}
           onClick={() => handleDeleteTask(index)}
         >
           x

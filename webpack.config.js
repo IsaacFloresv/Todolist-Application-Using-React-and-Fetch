@@ -3,10 +3,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const port = 3000;
 let publicUrl = `ws://localhost:${port}/ws`;
-if(process.env.GITPOD_WORKSPACE_URL){
+if (process.env.GITPOD_WORKSPACE_URL) {
   const [schema, host] = process.env.GITPOD_WORKSPACE_URL.split('://');
   publicUrl = `wss://${port}-${host}/ws`;
 }
@@ -23,25 +24,25 @@ module.exports = {
   },
   module: {
     rules: [
-        {
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          use: ['babel-loader']
-        },
-        {
-          test: /\.(css)$/, use: [{
-              loader: "style-loader" // creates style nodes from JS strings
-          }, {
-              loader: "css-loader" // translates CSS into CommonJS
-          }]
-        }, //css only files
-        { 
-          test: /\.(png|svg|jpg|gif)$/, use: {
-            loader: 'file-loader',
-            options: { name: '[name].[ext]' } 
-          }
-        }, //for images
-        { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, use: ['file-loader'] } //for fonts
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      },
+      {
+        test: /\.(css)$/, use: [{
+          loader: "style-loader" // creates style nodes from JS strings
+        }, {
+          loader: "css-loader" // translates CSS into CommonJS
+        }]
+      }, //css only files
+      {
+        test: /\.(png|svg|jpg|gif)$/, use: {
+          loader: 'file-loader',
+          options: { name: '[name].[ext]' }
+        }
+      }, //for images
+      { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, use: ['file-loader'] } //for fonts
     ]
   },
   resolve: {
@@ -66,8 +67,9 @@ module.exports = {
     //   files: path.resolve(__dirname, "src"),
     // }),
     new HtmlWebpackPlugin({
-        favicon: '4geeks.ico',
-        template: 'template.html'
+      favicon: '4geeks.ico',
+      template: 'template.html'
     }),
+    new Dotenv(),
   ]
 };
