@@ -16,7 +16,6 @@ const updateTasks = (url, newTasks) => {
       body: JSON.stringify(newTasks)
     })
     .then(res => res.json())
-    .then(data => console.log(data))
 }
 
 export { getTasks, updateTasks }

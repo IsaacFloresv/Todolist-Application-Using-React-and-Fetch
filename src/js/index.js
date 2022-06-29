@@ -7,5 +7,6 @@ import "../styles/index.css";
 //import your own components
 import TodoList from "./component/TodoList.jsx";
 
-//render your react application
+
+// //render your react application
 ReactDOM.render(<React.StrictMode><TodoList /></React.StrictMode>, document.querySelector("#app"));
