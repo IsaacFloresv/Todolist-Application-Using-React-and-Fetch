@@ -6,8 +6,6 @@ import AddTaskInput from "./AddTaskInput.jsx";
 import NoTaskMessage from "./NoTaskMessage.jsx";
 import TaskCounter from "./TaskCounter.jsx";
 
-import ReactDOMServer from "react-dom/server";
-
 //Helpers
 import { getTasks, updateTasks } from "../helpers/getTasks.js";
 
