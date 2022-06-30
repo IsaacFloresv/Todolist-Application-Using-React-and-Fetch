@@ -4,7 +4,7 @@ import Task from "./Task.jsx";
 import Title from "./Title.jsx";
 import AddTaskInput from "./AddTaskInput.jsx";
 import NoTaskMessage from "./NoTaskMessage.jsx";
-import TaskCounter from "./TaskCounter.jsx";
+import Footer from "./Footer.jsx";
 
 //Helpers
 import { getTasks, updateTasks } from "../helpers/getTasks.js";
@@ -63,6 +63,19 @@ const TodoList = () => {
 		}))
 	}
 
+	const handleDeleteAllTasks = () => {
+		setTasks([])
+	}
+
+	const handleCompleteTask = (index) => {
+
+		let copyTask = [...tasks];
+
+		copyTask[index].done = true
+
+		setTasks(copyTask)
+	}
+
 	return (
 		<div className="vh-100 d-flex flex-column align-items-center bg-grey">
 
@@ -90,6 +103,7 @@ const TodoList = () => {
 											deleteItemShowing={deleteItemShowing}
 											setDeleteItemShowing={setDeleteItemShowing}
 											handleDeleteTask={handleDeleteTask}
+											handleCompleteTask={handleCompleteTask}
 										/>
 									)
 								})
@@ -101,8 +115,9 @@ const TodoList = () => {
 						/>
 				}
 
-				<TaskCounter
+				<Footer
 					tasks={tasks}
+					handleDeleteAllTasks={handleDeleteAllTasks}
 				/>
 
 			</div>

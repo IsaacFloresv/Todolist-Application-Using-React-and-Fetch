@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Task = ({ task, index, setDeleteItemShowing, deleteItemShowing, handleDeleteTask }) => {
+const Task = ({ task, index, setDeleteItemShowing, deleteItemShowing, handleDeleteTask, handleCompleteTask }) => {
 
   return (
     <div
@@ -9,16 +9,30 @@ const Task = ({ task, index, setDeleteItemShowing, deleteItemShowing, handleDele
       onMouseLeave={() => setDeleteItemShowing({ isShowing: false, index: null })}
     >
       <div className="m-0 p-0 d-flex align-items-center justify-content-between">
-        <h5 className={` text-muted fw-normal px-5 py-3 m-0`}>
-          {task.label}
-        </h5>
-        <span
-          className={`btn-delete text-danger fw-normal px-5 py-3 m-0 text-end
+        <div>
+          <h5
+            className={` text-muted fw-normal px-5 py-3 m-0`}
+            style={task.done ? { textDecoration: 'line-through' } : {}}
+          >
+            {task.label}
+          </h5>
+        </div>
+        <div className='d-flex align-items-center'>
+          <span
+            className={`btn-delete text-success fw-normal px-3 py-3 m-0 text-end
           ${deleteItemShowing.index === index ? '' : 'd-none'}`}
-          onClick={() => handleDeleteTask(index)}
-        >
-          x
-        </span>
+            onClick={() => handleCompleteTask(index)}
+          >
+            ✓
+          </span>
+          <span
+            className={`btn-delete text-danger fw-normal px-3 py-3 m-0 text-end
+          ${deleteItemShowing.index === index ? '' : 'd-none'}`}
+            onClick={() => handleDeleteTask(index)}
+          >
+            x
+          </span>
+        </div>
       </div>
       <hr />
     </div>
