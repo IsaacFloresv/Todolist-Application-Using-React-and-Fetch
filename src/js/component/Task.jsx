@@ -11,7 +11,7 @@ const Task = ({ task, index, setDeleteItemShowing, deleteItemShowing, handleDele
       <div className="m-0 p-0 d-flex align-items-center justify-content-between">
         <div>
           <h5
-            className={` text-muted fw-normal px-5 py-3 m-0`}
+            className={` text-muted fw-normal px-4 py-3 m-0`}
             style={task.done ? { textDecoration: 'line-through' } : {}}
           >
             {task.label}

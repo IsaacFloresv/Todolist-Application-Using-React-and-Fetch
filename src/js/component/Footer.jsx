@@ -9,7 +9,7 @@ const Footer = ({ tasks, handleDeleteAllTasks }) => {
             {
               tasks.length > 0
                 ? `${tasks.length} item left`
-                : `No have tasks pending`
+                : `No tasks`
             }
           </small>
         </span>
@@ -20,7 +20,7 @@ const Footer = ({ tasks, handleDeleteAllTasks }) => {
           <small>
             {
               tasks.length > 0
-                ? 'Delete all tasks'
+                ? 'Clear all'
                 : ''
             }
           </small>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 // Components import ------------------------------------------------------------
 import Task from "./Task.jsx";
 import Title from "./Title.jsx";
-import AddTaskInput from "./AddTaskInput.jsx";
+import NewTask from "./NewTask.jsx";
 import NoTaskMessage from "./NoTaskMessage.jsx";
 import Footer from "./Footer.jsx";
 
@@ -79,11 +79,11 @@ const TodoList = () => {
 	return (
 		<div className="vh-100 d-flex flex-column align-items-center bg-grey">
 
-			<Title title={"TODO's"} />
+			<Title title={"TO-DO"} />
 
 			<div className="bg-white row col-10 col-sm-8 col-md-8 col-lg-8 col-xl-6 todo-container">
 
-				<AddTaskInput
+				<NewTask
 					inputValue={inputValue}
 					handleInputChange={handleInputChange}
 					handleAddTask={handleAddTask}
@@ -111,7 +111,7 @@ const TodoList = () => {
 						</div>
 						: // if user dont have any task
 						<NoTaskMessage
-							message={'No tasks, add a task'}
+							message={'No tasks...'}
 						/>
 				}
 

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 
-const AddTaskInput = ({ inputValue, handleInputChange, handleAddTask }) => {
+const NewTask = ({ inputValue, handleInputChange, handleAddTask }) => {
   return (
     <div className="p-0">
       <input
@@ -17,4 +17,4 @@ const AddTaskInput = ({ inputValue, handleInputChange, handleAddTask }) => {
 }
 
 
-export default AddTaskInput
+export default NewTask
